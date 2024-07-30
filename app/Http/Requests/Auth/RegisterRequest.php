@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterRequest extends FormRequest
 {
@@ -24,7 +25,14 @@ class RegisterRequest extends FormRequest
         return [
             'full_name' => 'required|min:5|max:150',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:5|max:25|confirmed',
+            'password' => [
+                'required',
+                Password::min(5)
+                ->mixedCase()
+                ->numbers()
+                ->symbols(true),
+                'confirmed',
+            ],
         ];
     }
 
@@ -43,9 +51,12 @@ class RegisterRequest extends FormRequest
             'email.email' => 'Email must be a valid email address',
             'email.unique' => 'Email is already taken. Please try with other email address',
             'password.required' => 'Please enter your password',
-            'password.min' => 'Password must be atleast 5 chars long',
-            'password.max' => 'Password must not be more than 25 chars',
+            'password.string' => 'Password must contain string chars',
+            'password.min' => 'Password must be at least 5 chars long',
             'password.confirmed' => 'Password does not match',
+            'password.mixedCase' => 'Password must include at least one uppercase and one lowercase letter',
+            'password.numbers' => 'Password must include at least one number',
+            'password.symbols' => 'Password must include at least one special character',
         ];
     }
 }

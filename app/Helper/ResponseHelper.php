@@ -20,7 +20,7 @@ class ResponseHelper
      * @param integer $statusCode
      * @return response
      */
-    public static function success($status = 'success', $message = null, $data = [], $statusCode = 200) {
+    public static function success($status = 1, $message = null, $data = [], $statusCode = 200) {
         return response()->json([
             'status' => $status,
             'message' => $message,
@@ -35,7 +35,7 @@ class ResponseHelper
      * @param integer $statusCode
      * @return response
      */
-    public static function error($status = 'error', $message = null, $statusCode = 400) {
+    public static function error($status = 0, $message = null, $statusCode = 400) {
         return response()->json([
             'status' => $status,
             'message' => $message,
